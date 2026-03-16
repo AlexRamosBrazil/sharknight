@@ -101,6 +101,12 @@ sharknight/
 - General evolution guide: `docs/PROJECT_EVOLUTION_GUIDE.md`
 - Beta readiness review: `docs/BETA_READINESS.md`
 
+## License
+
+This project is licensed under the MIT License.
+
+That means the project can be copied, modified, and redistributed, including in derived works, as long as the original copyright notice and license text are kept.
+
 ## Beta Focus
 
 The next quality milestone is not adding more systems first. It is tightening the feel and reliability of what already exists:
