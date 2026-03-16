@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://bc6h4ra1h5g3r"]
+
+[ext_resource type="Script" path="res://scripts/core/level_base.gd" id="1_45j7q"]
+
+[node name="LevelBase" type="Node2D"]
+script = ExtResource("1_45j7q")
+
+[node name="Backgrounds" type="Node2D" parent="."]
+
+[node name="Far" type="Node2D" parent="Backgrounds"]
+
+[node name="Mid" type="Node2D" parent="Backgrounds"]
+
+[node name="Near" type="Node2D" parent="Backgrounds"]
+
+[node name="TileLayers" type="Node2D" parent="."]
+
+[node name="Ground" type="Node2D" parent="TileLayers"]
+
+[node name="Details" type="Node2D" parent="TileLayers"]
+
+[node name="Hazards" type="Node2D" parent="TileLayers"]
+
+[node name="Water" type="Node2D" parent="TileLayers"]
+
+[node name="Decoration" type="Node2D" parent="TileLayers"]
+
+[node name="Gameplay" type="Node2D" parent="."]
+
+[node name="Actors" type="Node2D" parent="Gameplay"]
+
+[node name="Enemies" type="Node2D" parent="Gameplay"]
+
+[node name="Pickups" type="Node2D" parent="Gameplay"]
+
+[node name="HazardInstances" type="Node2D" parent="Gameplay"]
+
+[node name="Checkpoints" type="Node2D" parent="Gameplay"]
+
+[node name="Doors" type="Node2D" parent="Gameplay"]
+
+[node name="Triggers" type="Node2D" parent="Gameplay"]
+
+[node name="SpawnPoints" type="Node2D" parent="."]
+
+[node name="start" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(80, 220)

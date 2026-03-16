@@ -1,0 +1,13 @@
+.godot/
+
+# Godot editor and import artifacts
+*.translation
+*.import
+export.cfg
+export_presets.cfg
+
+# OS and editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

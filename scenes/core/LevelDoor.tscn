@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://dsk73a2u4x7iq"]
+
+[ext_resource type="Script" path="res://scripts/core/level_door.gd" id="1_w58wk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
+size = Vector2(20, 32)
+
+[node name="LevelDoor" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_w58wk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_door")
+position = Vector2(0, -16)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -10.0
+offset_top = -32.0
+offset_right = 10.0
+offset_bottom = 0.0
+color = Color(0.2, 0.65, 0.78, 0.55)

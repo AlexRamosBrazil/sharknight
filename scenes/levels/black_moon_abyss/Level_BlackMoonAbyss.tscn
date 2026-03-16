@@ -1,0 +1,189 @@
+[gd_scene load_steps=13 format=3 uid="uid://bh1ujol68xig1"]
+
+[ext_resource type="Script" path="res://scripts/core/level_base.gd" id="1_ncv0p"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/Bat.tscn" id="2_u6p8m"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/Mermaid.tscn" id="3_x2q5n"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/KnightEnemy.tscn" id="4_v3r7j"]
+[ext_resource type="PackedScene" path="res://scenes/core/Coin.tscn" id="5_z8m1s"]
+[ext_resource type="PackedScene" path="res://scenes/core/ManaPickup.tscn" id="6_s4d9w"]
+[ext_resource type="PackedScene" path="res://scenes/core/Checkpoint.tscn" id="7_q6j2n"]
+[ext_resource type="PackedScene" path="res://scenes/core/WaterArea.tscn" id="8_w5l7m"]
+[ext_resource type="PackedScene" path="res://scenes/core/LevelDoor.tscn" id="9_r2v8x"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/AbyssWisp.tscn" id="10_a7q2m"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
+size = Vector2(864, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform_large"]
+size = Vector2(128, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform_small"]
+size = Vector2(96, 16)
+
+[node name="Level_BlackMoonAbyss" type="Node2D"]
+script = ExtResource("1_ncv0p")
+default_spawn_position = Vector2(72, 220)
+area_name = "Abismo da Lua Negra"
+
+[node name="Backgrounds" type="Node2D" parent="."]
+
+[node name="Far" type="Node2D" parent="Backgrounds"]
+
+[node name="VoidSea" type="ColorRect" parent="Backgrounds/Far"]
+offset_left = -160.0
+offset_top = -90.0
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.0431373, 0.0509804, 0.101961, 1)
+
+[node name="Mid" type="Node2D" parent="Backgrounds"]
+
+[node name="MoonGlow" type="ColorRect" parent="Backgrounds/Mid"]
+offset_left = -160.0
+offset_top = 152.0
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.203922, 0.188235, 0.356863, 0.58)
+
+[node name="Near" type="Node2D" parent="Backgrounds"]
+
+[node name="AbyssBand" type="ColorRect" parent="Backgrounds/Near"]
+offset_left = 0.0
+offset_top = 256.0
+offset_right = 864.0
+offset_bottom = 332.0
+color = Color(0.341176, 0.341176, 0.611765, 0.16)
+
+[node name="TileLayers" type="Node2D" parent="."]
+
+[node name="Ground" type="Node2D" parent="TileLayers"]
+
+[node name="World" type="StaticBody2D" parent="TileLayers/Ground"]
+collision_layer = 1
+
+[node name="GroundCollision" type="CollisionShape2D" parent="TileLayers/Ground/World"]
+shape = SubResource("RectangleShape2D_ground")
+position = Vector2(432, 316)
+
+[node name="GroundVisual" type="ColorRect" parent="TileLayers/Ground/World"]
+offset_left = 0.0
+offset_top = 300.0
+offset_right = 864.0
+offset_bottom = 332.0
+color = Color(0.152941, 0.14902, 0.266667, 1)
+
+[node name="PlatformA" type="StaticBody2D" parent="TileLayers/Ground"]
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileLayers/Ground/PlatformA"]
+shape = SubResource("RectangleShape2D_platform_large")
+position = Vector2(200, 240)
+
+[node name="ColorRect" type="ColorRect" parent="TileLayers/Ground/PlatformA"]
+offset_left = 136.0
+offset_top = 232.0
+offset_right = 264.0
+offset_bottom = 248.0
+color = Color(0.301961, 0.313726, 0.517647, 1)
+
+[node name="PlatformB" type="StaticBody2D" parent="TileLayers/Ground"]
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileLayers/Ground/PlatformB"]
+shape = SubResource("RectangleShape2D_platform_small")
+position = Vector2(488, 176)
+
+[node name="ColorRect" type="ColorRect" parent="TileLayers/Ground/PlatformB"]
+offset_left = 440.0
+offset_top = 168.0
+offset_right = 536.0
+offset_bottom = 184.0
+color = Color(0.301961, 0.313726, 0.517647, 1)
+
+[node name="PlatformC" type="StaticBody2D" parent="TileLayers/Ground"]
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileLayers/Ground/PlatformC"]
+shape = SubResource("RectangleShape2D_platform_small")
+position = Vector2(752, 120)
+
+[node name="ColorRect" type="ColorRect" parent="TileLayers/Ground/PlatformC"]
+offset_left = 704.0
+offset_top = 112.0
+offset_right = 800.0
+offset_bottom = 128.0
+color = Color(0.301961, 0.313726, 0.517647, 1)
+
+[node name="Details" type="Node2D" parent="TileLayers"]
+
+[node name="Hazards" type="Node2D" parent="TileLayers"]
+
+[node name="Water" type="Node2D" parent="TileLayers"]
+
+[node name="Water1" parent="TileLayers/Water" instance=ExtResource("8_w5l7m")]
+position = Vector2(584, 280)
+
+[node name="Water2" parent="TileLayers/Water" instance=ExtResource("8_w5l7m")]
+position = Vector2(648, 280)
+
+[node name="Decoration" type="Node2D" parent="TileLayers"]
+
+[node name="Gameplay" type="Node2D" parent="."]
+
+[node name="Actors" type="Node2D" parent="Gameplay"]
+
+[node name="Enemies" type="Node2D" parent="Gameplay"]
+
+[node name="Bat" parent="Gameplay/Enemies" instance=ExtResource("2_u6p8m")]
+position = Vector2(472, 136)
+
+[node name="Mermaid" parent="Gameplay/Enemies" instance=ExtResource("3_x2q5n")]
+position = Vector2(640, 294)
+
+[node name="KnightEnemy" parent="Gameplay/Enemies" instance=ExtResource("4_v3r7j")]
+position = Vector2(728, 120)
+
+[node name="AbyssWisp" parent="Gameplay/Enemies" instance=ExtResource("10_a7q2m")]
+position = Vector2(566, 132)
+
+[node name="Pickups" type="Node2D" parent="Gameplay"]
+
+[node name="Coin1" parent="Gameplay/Pickups" instance=ExtResource("5_z8m1s")]
+position = Vector2(200, 210)
+
+[node name="Coin2" parent="Gameplay/Pickups" instance=ExtResource("5_z8m1s")]
+position = Vector2(456, 160)
+
+[node name="Coin3" parent="Gameplay/Pickups" instance=ExtResource("5_z8m1s")]
+position = Vector2(720, 112)
+
+[node name="ManaPickup" parent="Gameplay/Pickups" instance=ExtResource("6_s4d9w")]
+position = Vector2(584, 284)
+
+[node name="HazardInstances" type="Node2D" parent="Gameplay"]
+
+[node name="Checkpoints" type="Node2D" parent="Gameplay"]
+
+[node name="CheckpointMid" parent="Gameplay/Checkpoints" instance=ExtResource("7_q6j2n")]
+position = Vector2(584, 300)
+checkpoint_tag = "mid"
+
+[node name="Doors" type="Node2D" parent="Gameplay"]
+
+[node name="FinalDoor" parent="Gameplay/Doors" instance=ExtResource("9_r2v8x")]
+position = Vector2(832, 300)
+target_spawn_tag = "start"
+auto_complete_if_empty = true
+
+[node name="Triggers" type="Node2D" parent="Gameplay"]
+
+[node name="SpawnPoints" type="Node2D" parent="."]
+
+[node name="start" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(72, 220)
+
+[node name="abyss_gate" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(736, 92)
+
+[node name="mid" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(584, 220)

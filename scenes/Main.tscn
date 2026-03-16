@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://b1pd4k8r6mfm3"]
+
+[ext_resource type="Script" path="res://scripts/core/main.gd" id="1_h3qa0"]
+[ext_resource type="Script" path="res://scripts/core/game_state.gd" id="2_u4s4i"]
+[ext_resource type="Script" path="res://scripts/core/save_manager.gd" id="3_syqul"]
+[ext_resource type="Script" path="res://scripts/core/game_manager.gd" id="4_6ng0v"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_h3qa0")
+
+[node name="GameState" type="Node" parent="."]
+script = ExtResource("2_u4s4i")
+
+[node name="SaveManager" type="Node" parent="."]
+script = ExtResource("3_syqul")
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("4_6ng0v")
+
+[node name="SceneRoot" type="Node" parent="."]
+
+[node name="UIRoot" type="CanvasLayer" parent="."]

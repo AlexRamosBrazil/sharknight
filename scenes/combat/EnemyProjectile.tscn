@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://c8h7j3rq5dspc"]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy_projectile.gd" id="1_7g5v0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_enemy_projectile"]
+size = Vector2(10, 4)
+
+[node name="EnemyProjectile" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_7g5v0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_enemy_projectile")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -5.0
+offset_top = -2.0
+offset_right = 5.0
+offset_bottom = 2.0
+color = Color(0.94902, 0.721569, 0.431373, 1)
+
+[node name="LifeTimer" type="Timer" parent="."]
+one_shot = true

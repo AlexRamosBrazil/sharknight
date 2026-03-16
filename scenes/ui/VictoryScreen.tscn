@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://bfxkuo3f86egb"]
+
+[ext_resource type="Script" path="res://scripts/ui/victory_screen.gd" id="1_vg7m0"]
+
+[node name="VictoryScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vg7m0")
+visible = false
+
+[node name="Backdrop" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0470588, 0.133333, 0.160784, 0.72)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Frame" type="PanelContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/Frame"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="CenterContainer/Frame/VBoxContainer"]
+layout_mode = 2
+text = "Vitoria"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="CenterContainer/Frame/VBoxContainer"]
+layout_mode = 2
+text = "Area concluida"
+horizontal_alignment = 1
+
+[node name="SummaryLabel" type="Label" parent="CenterContainer/Frame/VBoxContainer"]
+layout_mode = 2
+text = "Moedas coletadas: 0"
+horizontal_alignment = 1
+
+[node name="ContinueButton" type="Button" parent="CenterContainer/Frame/VBoxContainer"]
+layout_mode = 2
+text = "Continuar"
+
+[node name="MainMenuButton" type="Button" parent="CenterContainer/Frame/VBoxContainer"]
+layout_mode = 2
+text = "Menu Inicial"

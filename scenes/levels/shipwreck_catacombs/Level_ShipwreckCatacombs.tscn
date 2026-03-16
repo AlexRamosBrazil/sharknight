@@ -1,0 +1,193 @@
+[gd_scene load_steps=13 format=3 uid="uid://c0n4h6xms5s0v"]
+
+[ext_resource type="Script" path="res://scripts/core/level_base.gd" id="1_09dcu"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/Skeleton.tscn" id="2_s2n9k"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/Fisherman.tscn" id="3_w6h3p"]
+[ext_resource type="PackedScene" path="res://scenes/core/Coin.tscn" id="4_k1x9v"]
+[ext_resource type="PackedScene" path="res://scenes/core/HealPickup.tscn" id="5_r8v7m"]
+[ext_resource type="PackedScene" path="res://scenes/core/Checkpoint.tscn" id="6_t3d8j"]
+[ext_resource type="PackedScene" path="res://scenes/core/LadderArea.tscn" id="7_m5c2q"]
+[ext_resource type="PackedScene" path="res://scenes/core/LevelDoor.tscn" id="8_l4a6y"]
+[ext_resource type="PackedScene" path="res://scenes/core/HazardSpike.tscn" id="9_y2p7e"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
+size = Vector2(736, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform_large"]
+size = Vector2(128, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform_small"]
+size = Vector2(80, 16)
+
+[node name="Level_ShipwreckCatacombs" type="Node2D"]
+script = ExtResource("1_09dcu")
+default_spawn_position = Vector2(72, 220)
+area_name = "Catacumbas do Naufragio"
+
+[node name="Backgrounds" type="Node2D" parent="."]
+
+[node name="Far" type="Node2D" parent="Backgrounds"]
+
+[node name="CavernDark" type="ColorRect" parent="Backgrounds/Far"]
+offset_left = -160.0
+offset_top = -90.0
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.0823529, 0.12549, 0.176471, 1)
+
+[node name="Mid" type="Node2D" parent="Backgrounds"]
+
+[node name="WoodShadow" type="ColorRect" parent="Backgrounds/Mid"]
+offset_left = -160.0
+offset_top = 180.0
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.180392, 0.14902, 0.105882, 0.65)
+
+[node name="Near" type="Node2D" parent="Backgrounds"]
+
+[node name="MistBand" type="ColorRect" parent="Backgrounds/Near"]
+offset_left = 0.0
+offset_top = 264.0
+offset_right = 736.0
+offset_bottom = 332.0
+color = Color(0.556863, 0.517647, 0.435294, 0.22)
+
+[node name="TileLayers" type="Node2D" parent="."]
+
+[node name="Ground" type="Node2D" parent="TileLayers"]
+
+[node name="World" type="StaticBody2D" parent="TileLayers/Ground"]
+collision_layer = 1
+
+[node name="GroundCollision" type="CollisionShape2D" parent="TileLayers/Ground/World"]
+shape = SubResource("RectangleShape2D_ground")
+position = Vector2(368, 316)
+
+[node name="GroundVisual" type="ColorRect" parent="TileLayers/Ground/World"]
+offset_left = 0.0
+offset_top = 300.0
+offset_right = 736.0
+offset_bottom = 332.0
+color = Color(0.317647, 0.290196, 0.25098, 1)
+
+[node name="PlatformA" type="StaticBody2D" parent="TileLayers/Ground"]
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileLayers/Ground/PlatformA"]
+shape = SubResource("RectangleShape2D_platform_large")
+position = Vector2(196, 228)
+
+[node name="ColorRect" type="ColorRect" parent="TileLayers/Ground/PlatformA"]
+offset_left = 132.0
+offset_top = 220.0
+offset_right = 260.0
+offset_bottom = 236.0
+color = Color(0.447059, 0.333333, 0.227451, 1)
+
+[node name="PlatformB" type="StaticBody2D" parent="TileLayers/Ground"]
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileLayers/Ground/PlatformB"]
+shape = SubResource("RectangleShape2D_platform_small")
+position = Vector2(360, 192)
+
+[node name="ColorRect" type="ColorRect" parent="TileLayers/Ground/PlatformB"]
+offset_left = 320.0
+offset_top = 184.0
+offset_right = 400.0
+offset_bottom = 200.0
+color = Color(0.447059, 0.333333, 0.227451, 1)
+
+[node name="PlatformC" type="StaticBody2D" parent="TileLayers/Ground"]
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileLayers/Ground/PlatformC"]
+shape = SubResource("RectangleShape2D_platform_small")
+position = Vector2(600, 132)
+
+[node name="ColorRect" type="ColorRect" parent="TileLayers/Ground/PlatformC"]
+offset_left = 560.0
+offset_top = 124.0
+offset_right = 640.0
+offset_bottom = 140.0
+color = Color(0.447059, 0.333333, 0.227451, 1)
+
+[node name="Details" type="Node2D" parent="TileLayers"]
+
+[node name="Hazards" type="Node2D" parent="TileLayers"]
+
+[node name="Water" type="Node2D" parent="TileLayers"]
+
+[node name="Decoration" type="Node2D" parent="TileLayers"]
+
+[node name="Gameplay" type="Node2D" parent="."]
+
+[node name="Actors" type="Node2D" parent="Gameplay"]
+
+[node name="Enemies" type="Node2D" parent="Gameplay"]
+
+[node name="Skeleton" parent="Gameplay/Enemies" instance=ExtResource("2_s2n9k")]
+position = Vector2(254, 300)
+
+[node name="Fisherman" parent="Gameplay/Enemies" instance=ExtResource("3_w6h3p")]
+position = Vector2(560, 120)
+
+[node name="Pickups" type="Node2D" parent="Gameplay"]
+
+[node name="Coin1" parent="Gameplay/Pickups" instance=ExtResource("4_k1x9v")]
+position = Vector2(176, 210)
+
+[node name="Coin2" parent="Gameplay/Pickups" instance=ExtResource("4_k1x9v")]
+position = Vector2(360, 162)
+
+[node name="Coin3" parent="Gameplay/Pickups" instance=ExtResource("4_k1x9v")]
+position = Vector2(568, 114)
+
+[node name="HealPickup" parent="Gameplay/Pickups" instance=ExtResource("5_r8v7m")]
+position = Vector2(438, 284)
+
+[node name="HazardInstances" type="Node2D" parent="Gameplay"]
+
+[node name="Spike1" parent="Gameplay/HazardInstances" instance=ExtResource("9_y2p7e")]
+position = Vector2(448, 296)
+
+[node name="Spike2" parent="Gameplay/HazardInstances" instance=ExtResource("9_y2p7e")]
+position = Vector2(464, 296)
+
+[node name="Checkpoints" type="Node2D" parent="Gameplay"]
+
+[node name="CheckpointMid" parent="Gameplay/Checkpoints" instance=ExtResource("6_t3d8j")]
+position = Vector2(430, 300)
+checkpoint_tag = "mid"
+
+[node name="Doors" type="Node2D" parent="Gameplay"]
+
+[node name="DoorToDesert" parent="Gameplay/Doors" instance=ExtResource("8_l4a6y")]
+position = Vector2(704, 300)
+next_level_path = "res://scenes/levels/tides_desert/Level_TidesDesert.tscn"
+target_spawn_tag = "start"
+
+[node name="DoorToDesertUpper" parent="Gameplay/Doors" instance=ExtResource("8_l4a6y")]
+position = Vector2(622, 108)
+next_level_path = "res://scenes/levels/tides_desert/Level_TidesDesert.tscn"
+target_spawn_tag = "dune_high"
+
+[node name="Triggers" type="Node2D" parent="Gameplay"]
+
+[node name="LadderA" parent="Gameplay/Triggers" instance=ExtResource("7_m5c2q")]
+position = Vector2(360, 240)
+
+[node name="LadderB" parent="Gameplay/Triggers" instance=ExtResource("7_m5c2q")]
+position = Vector2(568, 192)
+
+[node name="SpawnPoints" type="Node2D" parent="."]
+
+[node name="start" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(72, 220)
+
+[node name="upper_entry" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(598, 104)
+
+[node name="mid" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(430, 220)

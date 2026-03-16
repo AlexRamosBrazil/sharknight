@@ -1,0 +1,192 @@
+[gd_scene load_steps=12 format=3 uid="uid://b4o3qcfosgk40"]
+
+[ext_resource type="Script" path="res://scripts/core/level_base.gd" id="1_3m3tn"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/Skeleton.tscn" id="2_t0v9q"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/KnightEnemy.tscn" id="3_w1e7j"]
+[ext_resource type="PackedScene" path="res://scenes/core/Coin.tscn" id="4_h6j4m"]
+[ext_resource type="PackedScene" path="res://scenes/core/Checkpoint.tscn" id="5_m9n3b"]
+[ext_resource type="PackedScene" path="res://scenes/core/HazardSpike.tscn" id="6_j3c7y"]
+[ext_resource type="PackedScene" path="res://scenes/core/LevelDoor.tscn" id="7_q7l5z"]
+[ext_resource type="PackedScene" path="res://scenes/core/ManaPickup.tscn" id="8_z3r8k"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
+size = Vector2(768, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform_large"]
+size = Vector2(128, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform_small"]
+size = Vector2(96, 16)
+
+[node name="Level_TidesDesert" type="Node2D"]
+script = ExtResource("1_3m3tn")
+default_spawn_position = Vector2(72, 220)
+area_name = "Deserto das Mares Perdidas"
+
+[node name="Backgrounds" type="Node2D" parent="."]
+
+[node name="Far" type="Node2D" parent="Backgrounds"]
+
+[node name="DuneSky" type="ColorRect" parent="Backgrounds/Far"]
+offset_left = -160.0
+offset_top = -90.0
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.529412, 0.572549, 0.611765, 1)
+
+[node name="Mid" type="Node2D" parent="Backgrounds"]
+
+[node name="SaltDunes" type="ColorRect" parent="Backgrounds/Mid"]
+offset_left = -160.0
+offset_top = 180.0
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.811765, 0.713726, 0.47451, 0.7)
+
+[node name="Near" type="Node2D" parent="Backgrounds"]
+
+[node name="DustBand" type="ColorRect" parent="Backgrounds/Near"]
+offset_left = 0.0
+offset_top = 274.0
+offset_right = 768.0
+offset_bottom = 332.0
+color = Color(0.921569, 0.831373, 0.580392, 0.28)
+
+[node name="TileLayers" type="Node2D" parent="."]
+
+[node name="Ground" type="Node2D" parent="TileLayers"]
+
+[node name="World" type="StaticBody2D" parent="TileLayers/Ground"]
+collision_layer = 1
+
+[node name="GroundCollision" type="CollisionShape2D" parent="TileLayers/Ground/World"]
+shape = SubResource("RectangleShape2D_ground")
+position = Vector2(384, 316)
+
+[node name="GroundVisual" type="ColorRect" parent="TileLayers/Ground/World"]
+offset_left = 0.0
+offset_top = 300.0
+offset_right = 768.0
+offset_bottom = 332.0
+color = Color(0.862745, 0.741176, 0.482353, 1)
+
+[node name="PlatformA" type="StaticBody2D" parent="TileLayers/Ground"]
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileLayers/Ground/PlatformA"]
+shape = SubResource("RectangleShape2D_platform_large")
+position = Vector2(208, 244)
+
+[node name="ColorRect" type="ColorRect" parent="TileLayers/Ground/PlatformA"]
+offset_left = 144.0
+offset_top = 236.0
+offset_right = 272.0
+offset_bottom = 252.0
+color = Color(0.717647, 0.588235, 0.337255, 1)
+
+[node name="PlatformB" type="StaticBody2D" parent="TileLayers/Ground"]
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileLayers/Ground/PlatformB"]
+shape = SubResource("RectangleShape2D_platform_small")
+position = Vector2(432, 176)
+
+[node name="ColorRect" type="ColorRect" parent="TileLayers/Ground/PlatformB"]
+offset_left = 384.0
+offset_top = 168.0
+offset_right = 480.0
+offset_bottom = 184.0
+color = Color(0.717647, 0.588235, 0.337255, 1)
+
+[node name="PlatformC" type="StaticBody2D" parent="TileLayers/Ground"]
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileLayers/Ground/PlatformC"]
+shape = SubResource("RectangleShape2D_platform_small")
+position = Vector2(608, 136)
+
+[node name="ColorRect" type="ColorRect" parent="TileLayers/Ground/PlatformC"]
+offset_left = 560.0
+offset_top = 128.0
+offset_right = 656.0
+offset_bottom = 144.0
+color = Color(0.717647, 0.588235, 0.337255, 1)
+
+[node name="Details" type="Node2D" parent="TileLayers"]
+
+[node name="Hazards" type="Node2D" parent="TileLayers"]
+
+[node name="Water" type="Node2D" parent="TileLayers"]
+
+[node name="Decoration" type="Node2D" parent="TileLayers"]
+
+[node name="Gameplay" type="Node2D" parent="."]
+
+[node name="Actors" type="Node2D" parent="Gameplay"]
+
+[node name="Enemies" type="Node2D" parent="Gameplay"]
+
+[node name="Skeleton" parent="Gameplay/Enemies" instance=ExtResource("2_t0v9q")]
+position = Vector2(250, 300)
+
+[node name="KnightEnemy" parent="Gameplay/Enemies" instance=ExtResource("3_w1e7j")]
+position = Vector2(626, 116)
+
+[node name="Pickups" type="Node2D" parent="Gameplay"]
+
+[node name="Coin1" parent="Gameplay/Pickups" instance=ExtResource("4_h6j4m")]
+position = Vector2(184, 208)
+
+[node name="Coin2" parent="Gameplay/Pickups" instance=ExtResource("4_h6j4m")]
+position = Vector2(392, 160)
+
+[node name="Coin3" parent="Gameplay/Pickups" instance=ExtResource("4_h6j4m")]
+position = Vector2(608, 106)
+
+[node name="ManaPickup" parent="Gameplay/Pickups" instance=ExtResource("8_z3r8k")]
+position = Vector2(470, 284)
+
+[node name="HazardInstances" type="Node2D" parent="Gameplay"]
+
+[node name="Spike1" parent="Gameplay/HazardInstances" instance=ExtResource("6_j3c7y")]
+position = Vector2(478, 296)
+
+[node name="Spike2" parent="Gameplay/HazardInstances" instance=ExtResource("6_j3c7y")]
+position = Vector2(494, 296)
+
+[node name="Spike3" parent="Gameplay/HazardInstances" instance=ExtResource("6_j3c7y")]
+position = Vector2(510, 296)
+
+[node name="Spike4" parent="Gameplay/HazardInstances" instance=ExtResource("6_j3c7y")]
+position = Vector2(526, 296)
+
+[node name="Checkpoints" type="Node2D" parent="Gameplay"]
+
+[node name="CheckpointMid" parent="Gameplay/Checkpoints" instance=ExtResource("5_m9n3b")]
+position = Vector2(470, 300)
+checkpoint_tag = "mid"
+
+[node name="Doors" type="Node2D" parent="Gameplay"]
+
+[node name="DoorToEstuary" parent="Gameplay/Doors" instance=ExtResource("7_q7l5z")]
+position = Vector2(736, 300)
+next_level_path = "res://scenes/levels/royal_estuary/Level_RoyalEstuary.tscn"
+target_spawn_tag = "start"
+
+[node name="DoorToEstuaryHigh" parent="Gameplay/Doors" instance=ExtResource("7_q7l5z")]
+position = Vector2(654, 108)
+next_level_path = "res://scenes/levels/royal_estuary/Level_RoyalEstuary.tscn"
+target_spawn_tag = "canal_entry"
+
+[node name="Triggers" type="Node2D" parent="Gameplay"]
+
+[node name="SpawnPoints" type="Node2D" parent="."]
+
+[node name="start" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(72, 220)
+
+[node name="dune_high" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(650, 108)
+
+[node name="mid" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(470, 220)

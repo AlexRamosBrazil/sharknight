@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=3 uid="uid://cejqgtgq7v77e"]
+
+[ext_resource type="Script" path="res://scripts/bosses/sea_dragon.gd" id="1_d77em"]
+[ext_resource type="Script" path="res://scripts/combat/hurtbox.gd" id="2_mh8o2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(28, 18)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_detect"]
+radius = 140.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_contact"]
+radius = 14.0
+
+[node name="SeaDragon" type="CharacterBody2D"]
+collision_layer = 8
+collision_mask = 1
+script = ExtResource("1_d77em")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_body")
+position = Vector2(0, -10)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -10)
+
+[node name="PlayerDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector"]
+shape = SubResource("CircleShape2D_detect")
+position = Vector2(0, -10)
+
+[node name="ContactArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactArea"]
+shape = SubResource("CircleShape2D_contact")
+position = Vector2(0, -10)
+
+[node name="ProjectileSpawn" type="Marker2D" parent="."]
+position = Vector2(18, -10)
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("2_mh8o2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_body")
+position = Vector2(0, -10)
+
+[node name="HurtFlashTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="AttackCooldownTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="TelegraphTimer" type="Timer" parent="."]
+one_shot = true

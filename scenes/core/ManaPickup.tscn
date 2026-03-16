@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://b80g0d0tsgyl7"]
+
+[ext_resource type="Script" path="res://scripts/core/mana_pickup.gd" id="1_55w3m"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mana"]
+radius = 6.0
+
+[node name="ManaPickup" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_55w3m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_mana")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -6.0
+offset_top = -6.0
+offset_right = 6.0
+offset_bottom = 6.0
+color = Color(0.203922, 0.533333, 0.909804, 1)

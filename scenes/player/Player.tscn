@@ -1,0 +1,241 @@
+[gd_scene load_steps=31 format=3 uid="uid://bdg6v5pko73fn"]
+
+[ext_resource type="Script" path="res://scripts/player/player.gd" id="1_56chf"]
+[ext_resource type="Script" path="res://scripts/player/player_state_machine.gd" id="2_b5u1s"]
+[ext_resource type="Script" path="res://scripts/player/states/idle_state.gd" id="3_o60je"]
+[ext_resource type="Script" path="res://scripts/player/states/run_state.gd" id="4_v6fa2"]
+[ext_resource type="Script" path="res://scripts/player/states/jump_state.gd" id="5_mg6jr"]
+[ext_resource type="Script" path="res://scripts/player/states/fall_state.gd" id="6_e5r31"]
+[ext_resource type="Script" path="res://scripts/player/states/crouch_state.gd" id="7_vng71"]
+[ext_resource type="Script" path="res://scripts/player/states/attack_ground_state.gd" id="8_xs78l"]
+[ext_resource type="Script" path="res://scripts/player/states/attack_air_state.gd" id="9_4ce8q"]
+[ext_resource type="Script" path="res://scripts/player/states/hurt_state.gd" id="10_qk4lx"]
+[ext_resource type="Script" path="res://scripts/player/states/dead_state.gd" id="11_1ovt7"]
+[ext_resource type="Script" path="res://scripts/player/player_movement.gd" id="12_eha0u"]
+[ext_resource type="Script" path="res://scripts/player/player_combat.gd" id="13_uvf3d"]
+[ext_resource type="Script" path="res://scripts/player/states/block_state.gd" id="14_7285q"]
+[ext_resource type="Script" path="res://scripts/player/states/attack_crouch_state.gd" id="15_97s3q"]
+[ext_resource type="Script" path="res://scripts/player/states/attack_charge_state.gd" id="16_11tcx"]
+[ext_resource type="Script" path="res://scripts/player/states/attack_ranged_state.gd" id="17_g9x21"]
+[ext_resource type="Script" path="res://scripts/player/states/attack_special_state.gd" id="18_7brqi"]
+[ext_resource type="Script" path="res://scripts/combat/attack_hitbox.gd" id="19_3tp5l"]
+[ext_resource type="Script" path="res://scripts/player/states/dash_state.gd" id="20_n1njr"]
+[ext_resource type="Script" path="res://scripts/player/states/wall_slide_state.gd" id="21_lmlpl"]
+[ext_resource type="Script" path="res://scripts/player/states/ladder_climb_state.gd" id="22_x5icd"]
+[ext_resource type="Script" path="res://scripts/player/states/ledge_hang_state.gd" id="23_2x3hn"]
+[ext_resource type="Script" path="res://scripts/player/states/swim_state.gd" id="24_36m3q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(12, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground_attack"]
+size = Vector2(14, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_crouch_attack"]
+size = Vector2(18, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_air_attack"]
+size = Vector2(16, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_charge_attack"]
+size = Vector2(22, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_special_attack"]
+size = Vector2(28, 20)
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1_56chf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_body")
+position = Vector2(0, -10)
+
+[node name="BodySprite" type="Sprite2D" parent="."]
+position = Vector2(0, -10)
+self_modulate = Color(0.545098, 0.839216, 0.788235, 1)
+
+[node name="ShieldSprite" type="Sprite2D" parent="."]
+position = Vector2(-7, -10)
+self_modulate = Color(0.623529, 0.807843, 0.505882, 1)
+scale = Vector2(0.5, 0.7)
+
+[node name="HurtTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Movement" type="Node" parent="."]
+script = ExtResource("12_eha0u")
+
+[node name="DashTimer" type="Timer" parent="Movement"]
+one_shot = true
+
+[node name="DashCooldownTimer" type="Timer" parent="Movement"]
+one_shot = true
+
+[node name="Combat" type="Node2D" parent="."]
+script = ExtResource("13_uvf3d")
+
+[node name="ProjectileSpawn" type="Marker2D" parent="Combat"]
+position = Vector2(14, -12)
+
+[node name="Hitboxes" type="Node2D" parent="Combat"]
+
+[node name="GroundHitbox" type="Area2D" parent="Combat/Hitboxes"]
+position = Vector2(12, -10)
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("19_3tp5l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Combat/Hitboxes/GroundHitbox"]
+shape = SubResource("RectangleShape2D_ground_attack")
+
+[node name="CrouchHitbox" type="Area2D" parent="Combat/Hitboxes"]
+position = Vector2(14, -4)
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("19_3tp5l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Combat/Hitboxes/CrouchHitbox"]
+shape = SubResource("RectangleShape2D_crouch_attack")
+
+[node name="AirHitbox" type="Area2D" parent="Combat/Hitboxes"]
+position = Vector2(10, -4)
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("19_3tp5l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Combat/Hitboxes/AirHitbox"]
+shape = SubResource("RectangleShape2D_air_attack")
+
+[node name="ChargeHitbox" type="Area2D" parent="Combat/Hitboxes"]
+position = Vector2(18, -10)
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("19_3tp5l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Combat/Hitboxes/ChargeHitbox"]
+shape = SubResource("RectangleShape2D_charge_attack")
+
+[node name="SpecialHitbox" type="Area2D" parent="Combat/Hitboxes"]
+position = Vector2(22, -10)
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("19_3tp5l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Combat/Hitboxes/SpecialHitbox"]
+shape = SubResource("RectangleShape2D_special_attack")
+
+[node name="AttackTimer" type="Timer" parent="Combat"]
+one_shot = true
+
+[node name="ActiveHitboxTimer" type="Timer" parent="Combat"]
+one_shot = true
+
+[node name="ComboResetTimer" type="Timer" parent="Combat"]
+one_shot = true
+
+[node name="RangedCooldownTimer" type="Timer" parent="Combat"]
+one_shot = true
+
+[node name="ChargeCooldownTimer" type="Timer" parent="Combat"]
+one_shot = true
+
+[node name="SpecialCooldownTimer" type="Timer" parent="Combat"]
+one_shot = true
+
+[node name="WallCastLeft" type="RayCast2D" parent="."]
+position = Vector2(-6, -10)
+target_position = Vector2(-6, 0)
+collision_mask = 1
+enabled = true
+
+[node name="WallCastRight" type="RayCast2D" parent="."]
+position = Vector2(6, -10)
+target_position = Vector2(6, 0)
+collision_mask = 1
+enabled = true
+
+[node name="LedgeWallCastLeft" type="RayCast2D" parent="."]
+position = Vector2(-6, -18)
+target_position = Vector2(-8, 0)
+collision_mask = 1
+enabled = true
+
+[node name="LedgeSpaceCastLeft" type="RayCast2D" parent="."]
+position = Vector2(-6, -28)
+target_position = Vector2(-8, 0)
+collision_mask = 1
+enabled = true
+
+[node name="LedgeWallCastRight" type="RayCast2D" parent="."]
+position = Vector2(6, -18)
+target_position = Vector2(8, 0)
+collision_mask = 1
+enabled = true
+
+[node name="LedgeSpaceCastRight" type="RayCast2D" parent="."]
+position = Vector2(6, -28)
+target_position = Vector2(8, 0)
+collision_mask = 1
+enabled = true
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("2_b5u1s")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("3_o60je")
+
+[node name="Run" type="Node" parent="StateMachine"]
+script = ExtResource("4_v6fa2")
+
+[node name="Jump" type="Node" parent="StateMachine"]
+script = ExtResource("5_mg6jr")
+
+[node name="Fall" type="Node" parent="StateMachine"]
+script = ExtResource("6_e5r31")
+
+[node name="Crouch" type="Node" parent="StateMachine"]
+script = ExtResource("7_vng71")
+
+[node name="Block" type="Node" parent="StateMachine"]
+script = ExtResource("14_7285q")
+
+[node name="Dash" type="Node" parent="StateMachine"]
+script = ExtResource("20_n1njr")
+
+[node name="Wall_Slide" type="Node" parent="StateMachine"]
+script = ExtResource("21_lmlpl")
+
+[node name="Ladder_Climb" type="Node" parent="StateMachine"]
+script = ExtResource("22_x5icd")
+
+[node name="Ledge_Hang" type="Node" parent="StateMachine"]
+script = ExtResource("23_2x3hn")
+
+[node name="Swim" type="Node" parent="StateMachine"]
+script = ExtResource("24_36m3q")
+
+[node name="Attack_Ground" type="Node" parent="StateMachine"]
+script = ExtResource("8_xs78l")
+
+[node name="Attack_Crouch" type="Node" parent="StateMachine"]
+script = ExtResource("15_97s3q")
+
+[node name="Attack_Air" type="Node" parent="StateMachine"]
+script = ExtResource("9_4ce8q")
+
+[node name="Attack_Charge" type="Node" parent="StateMachine"]
+script = ExtResource("16_11tcx")
+
+[node name="Attack_Ranged" type="Node" parent="StateMachine"]
+script = ExtResource("17_g9x21")
+
+[node name="Attack_Special" type="Node" parent="StateMachine"]
+script = ExtResource("18_7brqi")
+
+[node name="Hurt" type="Node" parent="StateMachine"]
+script = ExtResource("10_qk4lx")
+
+[node name="Dead" type="Node" parent="StateMachine"]
+script = ExtResource("11_1ovt7")

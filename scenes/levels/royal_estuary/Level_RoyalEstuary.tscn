@@ -1,0 +1,201 @@
+[gd_scene load_steps=14 format=3 uid="uid://dtmunwcfwlm0x"]
+
+[ext_resource type="Script" path="res://scripts/core/level_base.gd" id="1_1jlu6"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/Pirate.tscn" id="2_v4q2s"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/Mermaid.tscn" id="3_u8l1w"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/KnightEnemy.tscn" id="4_y9r6p"]
+[ext_resource type="PackedScene" path="res://scenes/core/Coin.tscn" id="5_m3k8z"]
+[ext_resource type="PackedScene" path="res://scenes/core/ManaPickup.tscn" id="6_p2v6c"]
+[ext_resource type="PackedScene" path="res://scenes/core/Checkpoint.tscn" id="7_b1j9n"]
+[ext_resource type="PackedScene" path="res://scenes/core/WaterArea.tscn" id="8_z5g2r"]
+[ext_resource type="PackedScene" path="res://scenes/core/LadderArea.tscn" id="9_v9s7e"]
+[ext_resource type="PackedScene" path="res://scenes/core/LevelDoor.tscn" id="10_r2n7j"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/CoralCrab.tscn" id="11_f4q7h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
+size = Vector2(800, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform_large"]
+size = Vector2(128, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform_small"]
+size = Vector2(96, 16)
+
+[node name="Level_RoyalEstuary" type="Node2D"]
+script = ExtResource("1_1jlu6")
+default_spawn_position = Vector2(72, 220)
+area_name = "Planicies do Estuario Real"
+
+[node name="Backgrounds" type="Node2D" parent="."]
+
+[node name="Far" type="Node2D" parent="Backgrounds"]
+
+[node name="MarshSky" type="ColorRect" parent="Backgrounds/Far"]
+offset_left = -160.0
+offset_top = -90.0
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.278431, 0.458824, 0.486275, 1)
+
+[node name="Mid" type="Node2D" parent="Backgrounds"]
+
+[node name="MarshBand" type="ColorRect" parent="Backgrounds/Mid"]
+offset_left = -160.0
+offset_top = 176.0
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.298039, 0.482353, 0.329412, 0.62)
+
+[node name="Near" type="Node2D" parent="Backgrounds"]
+
+[node name="BridgeGlow" type="ColorRect" parent="Backgrounds/Near"]
+offset_left = 0.0
+offset_top = 272.0
+offset_right = 800.0
+offset_bottom = 332.0
+color = Color(0.792157, 0.780392, 0.596078, 0.18)
+
+[node name="TileLayers" type="Node2D" parent="."]
+
+[node name="Ground" type="Node2D" parent="TileLayers"]
+
+[node name="World" type="StaticBody2D" parent="TileLayers/Ground"]
+collision_layer = 1
+
+[node name="GroundCollision" type="CollisionShape2D" parent="TileLayers/Ground/World"]
+shape = SubResource("RectangleShape2D_ground")
+position = Vector2(400, 316)
+
+[node name="GroundVisual" type="ColorRect" parent="TileLayers/Ground/World"]
+offset_left = 0.0
+offset_top = 300.0
+offset_right = 800.0
+offset_bottom = 332.0
+color = Color(0.517647, 0.556863, 0.352941, 1)
+
+[node name="BridgeA" type="StaticBody2D" parent="TileLayers/Ground"]
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileLayers/Ground/BridgeA"]
+shape = SubResource("RectangleShape2D_platform_large")
+position = Vector2(176, 248)
+
+[node name="ColorRect" type="ColorRect" parent="TileLayers/Ground/BridgeA"]
+offset_left = 112.0
+offset_top = 240.0
+offset_right = 240.0
+offset_bottom = 256.0
+color = Color(0.607843, 0.521569, 0.360784, 1)
+
+[node name="BridgeB" type="StaticBody2D" parent="TileLayers/Ground"]
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileLayers/Ground/BridgeB"]
+shape = SubResource("RectangleShape2D_platform_small")
+position = Vector2(400, 188)
+
+[node name="ColorRect" type="ColorRect" parent="TileLayers/Ground/BridgeB"]
+offset_left = 352.0
+offset_top = 180.0
+offset_right = 448.0
+offset_bottom = 196.0
+color = Color(0.607843, 0.521569, 0.360784, 1)
+
+[node name="BridgeC" type="StaticBody2D" parent="TileLayers/Ground"]
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileLayers/Ground/BridgeC"]
+shape = SubResource("RectangleShape2D_platform_small")
+position = Vector2(664, 132)
+
+[node name="ColorRect" type="ColorRect" parent="TileLayers/Ground/BridgeC"]
+offset_left = 616.0
+offset_top = 124.0
+offset_right = 712.0
+offset_bottom = 140.0
+color = Color(0.607843, 0.521569, 0.360784, 1)
+
+[node name="Details" type="Node2D" parent="TileLayers"]
+
+[node name="Hazards" type="Node2D" parent="TileLayers"]
+
+[node name="Water" type="Node2D" parent="TileLayers"]
+
+[node name="Water1" parent="TileLayers/Water" instance=ExtResource("8_z5g2r")]
+position = Vector2(304, 280)
+
+[node name="Water2" parent="TileLayers/Water" instance=ExtResource("8_z5g2r")]
+position = Vector2(368, 280)
+
+[node name="Water3" parent="TileLayers/Water" instance=ExtResource("8_z5g2r")]
+position = Vector2(432, 280)
+
+[node name="Decoration" type="Node2D" parent="TileLayers"]
+
+[node name="Gameplay" type="Node2D" parent="."]
+
+[node name="Actors" type="Node2D" parent="Gameplay"]
+
+[node name="Enemies" type="Node2D" parent="Gameplay"]
+
+[node name="Pirate" parent="Gameplay/Enemies" instance=ExtResource("2_v4q2s")]
+position = Vector2(250, 300)
+
+[node name="Mermaid" parent="Gameplay/Enemies" instance=ExtResource("3_u8l1w")]
+position = Vector2(498, 294)
+
+[node name="KnightEnemy" parent="Gameplay/Enemies" instance=ExtResource("4_y9r6p")]
+position = Vector2(652, 120)
+
+[node name="CoralCrab" parent="Gameplay/Enemies" instance=ExtResource("11_f4q7h")]
+position = Vector2(520, 300)
+
+[node name="Pickups" type="Node2D" parent="Gameplay"]
+
+[node name="Coin1" parent="Gameplay/Pickups" instance=ExtResource("5_m3k8z")]
+position = Vector2(192, 206)
+
+[node name="Coin2" parent="Gameplay/Pickups" instance=ExtResource("5_m3k8z")]
+position = Vector2(400, 158)
+
+[node name="Coin3" parent="Gameplay/Pickups" instance=ExtResource("5_m3k8z")]
+position = Vector2(640, 114)
+
+[node name="ManaPickup" parent="Gameplay/Pickups" instance=ExtResource("6_p2v6c")]
+position = Vector2(540, 284)
+
+[node name="HazardInstances" type="Node2D" parent="Gameplay"]
+
+[node name="Checkpoints" type="Node2D" parent="Gameplay"]
+
+[node name="CheckpointMid" parent="Gameplay/Checkpoints" instance=ExtResource("7_b1j9n")]
+position = Vector2(520, 300)
+checkpoint_tag = "mid"
+
+[node name="Doors" type="Node2D" parent="Gameplay"]
+
+[node name="DoorToCastle" parent="Gameplay/Doors" instance=ExtResource("10_r2n7j")]
+position = Vector2(768, 300)
+next_level_path = "res://scenes/levels/sunken_castle/Level_SunkenCastle.tscn"
+target_spawn_tag = "start"
+
+[node name="DoorToCastleRoof" parent="Gameplay/Doors" instance=ExtResource("10_r2n7j")]
+position = Vector2(690, 96)
+next_level_path = "res://scenes/levels/sunken_castle/Level_SunkenCastle.tscn"
+target_spawn_tag = "roof_entry"
+
+[node name="Triggers" type="Node2D" parent="Gameplay"]
+
+[node name="LadderA" parent="Gameplay/Triggers" instance=ExtResource("9_v9s7e")]
+position = Vector2(400, 236)
+
+[node name="SpawnPoints" type="Node2D" parent="."]
+
+[node name="start" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(72, 220)
+
+[node name="canal_entry" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(684, 96)
+
+[node name="mid" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(520, 220)

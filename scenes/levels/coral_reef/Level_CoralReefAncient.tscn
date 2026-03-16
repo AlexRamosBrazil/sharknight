@@ -1,0 +1,200 @@
+[gd_scene load_steps=13 format=3 uid="uid://bo5dhg2xx1vpg"]
+
+[ext_resource type="Script" path="res://scripts/core/level_base.gd" id="1_w3f9s"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/Bat.tscn" id="2_s4j6e"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/Mermaid.tscn" id="3_n6h2l"]
+[ext_resource type="PackedScene" path="res://scenes/core/Coin.tscn" id="4_u5m1p"]
+[ext_resource type="PackedScene" path="res://scenes/core/ManaPickup.tscn" id="5_x1t9d"]
+[ext_resource type="PackedScene" path="res://scenes/core/Checkpoint.tscn" id="6_j2y8q"]
+[ext_resource type="PackedScene" path="res://scenes/core/WaterArea.tscn" id="7_v7b3m"]
+[ext_resource type="PackedScene" path="res://scenes/core/LevelDoor.tscn" id="8_l7r2w"]
+[ext_resource type="PackedScene" path="res://scenes/core/HazardSpike.tscn" id="9_h2c8k"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/CoralCrab.tscn" id="10_n4p8e"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
+size = Vector2(736, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform_large"]
+size = Vector2(112, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform_small"]
+size = Vector2(80, 16)
+
+[node name="Level_CoralReefAncient" type="Node2D"]
+script = ExtResource("1_w3f9s")
+default_spawn_position = Vector2(72, 212)
+area_name = "Recife do Coral Antigo"
+
+[node name="Backgrounds" type="Node2D" parent="."]
+
+[node name="Far" type="Node2D" parent="Backgrounds"]
+
+[node name="WaterGlow" type="ColorRect" parent="Backgrounds/Far"]
+offset_left = -160.0
+offset_top = -90.0
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.109804, 0.356863, 0.447059, 1)
+
+[node name="Mid" type="Node2D" parent="Backgrounds"]
+
+[node name="CoralFog" type="ColorRect" parent="Backgrounds/Mid"]
+offset_left = -160.0
+offset_top = 160.0
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.207843, 0.607843, 0.584314, 0.65)
+
+[node name="Near" type="Node2D" parent="Backgrounds"]
+
+[node name="CoralBand" type="ColorRect" parent="Backgrounds/Near"]
+offset_left = 0.0
+offset_top = 276.0
+offset_right = 736.0
+offset_bottom = 332.0
+color = Color(0.760784, 0.431373, 0.505882, 0.35)
+
+[node name="TileLayers" type="Node2D" parent="."]
+
+[node name="Ground" type="Node2D" parent="TileLayers"]
+
+[node name="World" type="StaticBody2D" parent="TileLayers/Ground"]
+collision_layer = 1
+
+[node name="GroundCollision" type="CollisionShape2D" parent="TileLayers/Ground/World"]
+shape = SubResource("RectangleShape2D_ground")
+position = Vector2(368, 316)
+
+[node name="GroundVisual" type="ColorRect" parent="TileLayers/Ground/World"]
+offset_left = 0.0
+offset_top = 300.0
+offset_right = 736.0
+offset_bottom = 332.0
+color = Color(0.282353, 0.631373, 0.556863, 1)
+
+[node name="PlatformA" type="StaticBody2D" parent="TileLayers/Ground"]
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileLayers/Ground/PlatformA"]
+shape = SubResource("RectangleShape2D_platform_large")
+position = Vector2(176, 236)
+
+[node name="ColorRect" type="ColorRect" parent="TileLayers/Ground/PlatformA"]
+offset_left = 120.0
+offset_top = 228.0
+offset_right = 232.0
+offset_bottom = 244.0
+color = Color(0.85098, 0.517647, 0.423529, 1)
+
+[node name="PlatformB" type="StaticBody2D" parent="TileLayers/Ground"]
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileLayers/Ground/PlatformB"]
+shape = SubResource("RectangleShape2D_platform_small")
+position = Vector2(392, 176)
+
+[node name="ColorRect" type="ColorRect" parent="TileLayers/Ground/PlatformB"]
+offset_left = 352.0
+offset_top = 168.0
+offset_right = 432.0
+offset_bottom = 184.0
+color = Color(0.913725, 0.67451, 0.376471, 1)
+
+[node name="PlatformC" type="StaticBody2D" parent="TileLayers/Ground"]
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileLayers/Ground/PlatformC"]
+shape = SubResource("RectangleShape2D_platform_small")
+position = Vector2(592, 124)
+
+[node name="ColorRect" type="ColorRect" parent="TileLayers/Ground/PlatformC"]
+offset_left = 552.0
+offset_top = 116.0
+offset_right = 632.0
+offset_bottom = 132.0
+color = Color(0.913725, 0.47451, 0.552941, 1)
+
+[node name="Details" type="Node2D" parent="TileLayers"]
+
+[node name="Hazards" type="Node2D" parent="TileLayers"]
+
+[node name="Water" type="Node2D" parent="TileLayers"]
+
+[node name="WaterPool1" parent="TileLayers/Water" instance=ExtResource("7_v7b3m")]
+position = Vector2(304, 276)
+
+[node name="WaterPool2" parent="TileLayers/Water" instance=ExtResource("7_v7b3m")]
+position = Vector2(368, 276)
+
+[node name="WaterPool3" parent="TileLayers/Water" instance=ExtResource("7_v7b3m")]
+position = Vector2(432, 276)
+
+[node name="Decoration" type="Node2D" parent="TileLayers"]
+
+[node name="Gameplay" type="Node2D" parent="."]
+
+[node name="Actors" type="Node2D" parent="Gameplay"]
+
+[node name="Enemies" type="Node2D" parent="Gameplay"]
+
+[node name="Bat" parent="Gameplay/Enemies" instance=ExtResource("2_s4j6e")]
+position = Vector2(394, 128)
+
+[node name="Mermaid" parent="Gameplay/Enemies" instance=ExtResource("3_n6h2l")]
+position = Vector2(576, 294)
+
+[node name="CoralCrab" parent="Gameplay/Enemies" instance=ExtResource("10_n4p8e")]
+position = Vector2(250, 300)
+
+[node name="Pickups" type="Node2D" parent="Gameplay"]
+
+[node name="Coin1" parent="Gameplay/Pickups" instance=ExtResource("4_u5m1p")]
+position = Vector2(176, 204)
+
+[node name="Coin2" parent="Gameplay/Pickups" instance=ExtResource("4_u5m1p")]
+position = Vector2(376, 152)
+
+[node name="Coin3" parent="Gameplay/Pickups" instance=ExtResource("4_u5m1p")]
+position = Vector2(560, 100)
+
+[node name="ManaPickup" parent="Gameplay/Pickups" instance=ExtResource("5_x1t9d")]
+position = Vector2(460, 254)
+
+[node name="HazardInstances" type="Node2D" parent="Gameplay"]
+
+[node name="CoralSpike1" parent="Gameplay/HazardInstances" instance=ExtResource("9_h2c8k")]
+position = Vector2(240, 296)
+
+[node name="CoralSpike2" parent="Gameplay/HazardInstances" instance=ExtResource("9_h2c8k")]
+position = Vector2(256, 296)
+
+[node name="Checkpoints" type="Node2D" parent="Gameplay"]
+
+[node name="CheckpointMid" parent="Gameplay/Checkpoints" instance=ExtResource("6_j2y8q")]
+position = Vector2(472, 300)
+checkpoint_tag = "mid"
+
+[node name="Doors" type="Node2D" parent="Gameplay"]
+
+[node name="DoorToCatacombs" parent="Gameplay/Doors" instance=ExtResource("8_l7r2w")]
+position = Vector2(706, 300)
+next_level_path = "res://scenes/levels/shipwreck_catacombs/Level_ShipwreckCatacombs.tscn"
+target_spawn_tag = "start"
+
+[node name="DoorToCatacombsUpper" parent="Gameplay/Doors" instance=ExtResource("8_l7r2w")]
+position = Vector2(626, 100)
+next_level_path = "res://scenes/levels/shipwreck_catacombs/Level_ShipwreckCatacombs.tscn"
+target_spawn_tag = "upper_entry"
+
+[node name="Triggers" type="Node2D" parent="Gameplay"]
+
+[node name="SpawnPoints" type="Node2D" parent="."]
+
+[node name="start" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(72, 212)
+
+[node name="reef_high" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(602, 96)
+
+[node name="mid" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(472, 220)
